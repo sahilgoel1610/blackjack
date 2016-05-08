@@ -1,0 +1,35 @@
+<% if @winner.present? %>
+	<%= "#{@winner.name.to_s} wins" %>
+	</br>
+	<%= "with a score of #{@winner.total.to_i}" %>
+<% else %>
+	<%= form_tag("/update", method: "post") do %>
+		<%= hidden_field_tag("player_name","client")  %> 
+		<%= radio_button_tag(:deal_type, 'hit') %> <%= label_tag(:hit, "HIT") %>
+		<%= radio_button_tag(:deal_type, 'stand') %> <%= label_tag(:stand, "Stand") %>
+		<%= submit_tag("Deal") %>
+	<% end %>
+<% end %>
+
+</br>
+</br>
+</br>
+
+
+<% Player.includes(:cards).all.each do |player| %>
+	<%= "cards dealt by the #{player.name.to_s}" %>
+	</br>
+	<% player.cards.each do |card| %>
+		<%= "DECK #{card.deck.to_i} SUITE #{card.suite.to_i} NUMBER #{card.number.to_i}" %>
+		</br>
+	<%end%>
+	</br>
+	<%= "with total score #{player.total}" %>
+	</br>
+	</br>
+<% end %>
+
+<%= link_to "Restart", :controller => "game", :action => "new" %>
+
+
+
