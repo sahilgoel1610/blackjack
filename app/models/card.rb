@@ -4,7 +4,7 @@ class Card < ActiveRecord::Base
 	validates :number, uniqueness: {scope: [:deck,:suite]}
 	#format <Deck><suite><number>
 	
-
+	# deals a new card for player
 	def self.deal_new(player)
 		begin 	
 			new_card = Card.new
@@ -16,6 +16,7 @@ class Card < ActiveRecord::Base
 		new_card
 	end
 
+	# calculates player total from the dealt cards
 	def self.total(cards)
 		total = 0
 		cards.each do |card|
@@ -24,6 +25,7 @@ class Card < ActiveRecord::Base
 		total
 	end
 
+	# poin calculation of cards
 	def points
 		return 11 if number.to_i == 1 
 		return 10 if [11,12,13].include? number.to_i

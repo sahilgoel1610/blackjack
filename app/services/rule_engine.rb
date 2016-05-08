@@ -1,5 +1,5 @@
 class RuleEngine
-	
+	# A simple rule engine which decides on the winner
 	def self.select_winner(client,system,stand)
 		return if client.nil? or system.nil?	
 	 	return client if client.total == 21
